@@ -13,3 +13,6 @@ cleanup:
 
 gendata:
 	go test -v -run=TestGenData
+
+makeprofile:
+	go test -v -bench=. -cpuprofile=cpuprofile -run=TestURLTop

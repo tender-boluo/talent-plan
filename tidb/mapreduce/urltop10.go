@@ -81,7 +81,7 @@ func URLTop10Map(filename string, contents string) []KeyValue {
 		if i == block {
 			break
 		}
-		KeyValuePairs = append(KeyValuePairs, KeyValue{Key:"", Value: fmt.Sprintf("%s %s\n", u.url, strconv.Itoa(u.cnt))})
+		KeyValuePairs = append(KeyValuePairs, KeyValue{Key:"", Value: fmt.Sprintf("%s %s", u.url, strconv.Itoa(u.cnt))})
 	}
 	return KeyValuePairs
 }
