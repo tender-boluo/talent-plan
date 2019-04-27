@@ -16,3 +16,6 @@ gendata:
 
 makeprofile:
 	go test -v -bench=. -cpuprofile=cpuprofile -run=TestURLTop
+
+makeprofile_example:
+	go test -v -bench=. -cpuprofile=cpuprofile_example -run=TestExampleURLTop
