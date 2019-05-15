@@ -1,11 +1,11 @@
 package main
 
 import (
-	"strings"
-	"strconv"
+	"bytes"
 	"fmt"
 	"sort"
-	"bytes"
+	"strconv"
+	"strings"
 )
 
 // URLTop10 .
@@ -14,32 +14,32 @@ func URLTop10(nWorkers int) RoundsArgs {
 	// And don't forget to document your idea.
 	var args RoundsArgs
 	args = append(args, RoundArgs{
-		MapFunc   : URLCountMap,
+		MapFunc:    URLCountMap,
 		ReduceFunc: URLCountReduce,
-		NReduce   : nWorkers,
+		NReduce:    nWorkers,
 	})
 
 	args = append(args, RoundArgs{
-		MapFunc   : URLTop10Map,
+		MapFunc:    URLTop10Map,
 		ReduceFunc: URLTop10Reduce,
-		NReduce   : 1,
+		NReduce:    1,
 	})
 	return args
 }
 
 func URLCountMap(filename string, contents string) []KeyValue {
 	urls := strings.Split(string(contents), "\n")
-	urlCnt := make(map[string] int)
+	urlCnt := make(map[string]int)
 	for _, url := range urls {
 		url = strings.TrimSpace(url)
 		if len(url) == 0 {
 			continue
 		}
-		urlCnt[url] ++
+		urlCnt[url]++
 	}
 	KeyValuePairs := make([]KeyValue, 0, len(urlCnt))
-	for url,cnt := range urlCnt {
-		KeyValuePairs = append(KeyValuePairs, KeyValue{Key:url, Value: strconv.Itoa(cnt)})
+	for url, cnt := range urlCnt {
+		KeyValuePairs = append(KeyValuePairs, KeyValue{Key: url, Value: strconv.Itoa(cnt)})
 	}
 	return KeyValuePairs
 }
@@ -53,7 +53,7 @@ func URLCountReduce(key string, values []string) string {
 		}
 		cnt += value
 	}
-	return fmt.Sprintf("%s %s\n",key, strconv.Itoa(cnt))
+	return fmt.Sprintf("%s %s\n", key, strconv.Itoa(cnt))
 }
 
 func URLTop10Map(filename string, contents string) []KeyValue {
@@ -81,7 +81,7 @@ func URLTop10Map(filename string, contents string) []KeyValue {
 		if i == block {
 			break
 		}
-		KeyValuePairs = append(KeyValuePairs, KeyValue{Key:"", Value: fmt.Sprintf("%s %s", u.url, strconv.Itoa(u.cnt))})
+		KeyValuePairs = append(KeyValuePairs, KeyValue{Key: "", Value: fmt.Sprintf("%s %s", u.url, strconv.Itoa(u.cnt))})
 	}
 	return KeyValuePairs
 }
