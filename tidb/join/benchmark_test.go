@@ -13,3 +13,10 @@ func BenchmarkJoinExample(b *testing.B) {
 		JoinExample("./t/r0.tbl", "./t/r2.tbl", []int{0}, []int{1})
 	}
 }
+
+
+func BenchmarkJoinLoop(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		JoinLoop("./t/r0.tbl", "./t/r2.tbl", []int{0}, []int{1})
+	}
+}
